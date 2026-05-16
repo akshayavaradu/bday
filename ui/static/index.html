@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labubu's World</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d0221 0%, #1a0545 25%, #2d1b69 50%, #4a2080 75%, #6a3de8 100%);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating bubbles */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      border-radius: 50%;
+      opacity: 0.15;
+      animation: rise linear infinite;
+      background: radial-gradient(circle at 30% 30%, #c084fc, #7c3aed);
+    }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1);   opacity: 0.15; }
+      80%  { opacity: 0.1; }
+      100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+    }
+
+    /* Welcome text */
+    .welcome-text {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #c084fc, #818cf8, #60a5fa, #c084fc);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s linear infinite;
+      margin-bottom: 1.5rem;
+      text-shadow: none;
+      filter: drop-shadow(0 0 18px rgba(192, 132, 252, 0.6));
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+
+    /* Labubu scene */
+    .scene {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Speech bubble */
+    .speech-bubble {
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px solid #c084fc;
+      border-radius: 20px;
+      padding: 10px 22px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #5b21b6;
+      margin-bottom: 10px;
+      box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+      animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: 0.4s;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-top-color: #c084fc;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-top-color: rgba(255,255,255,0.95);
+      z-index: 1;
+    }
+
+    @keyframes popIn {
+      0%   { transform: scale(0) rotate(-5deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);  opacity: 1; }
+    }
+
+    /* Labubu body */
+    .labubu {
+      width: 180px;
+      height: 240px;
+      position: relative;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* Body */
+    .body {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 130px;
+      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
+      border-radius: 50px 50px 40px 40px;
+      border: 3px solid #9333ea;
+      box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
+    }
+
+    /* Tummy dot */
+    .tummy {
+      position: absolute;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 48px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 50%;
+    }
+
+    /* Head */
+    .head {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 95px;
+      background: linear-gradient(160deg, #f5e6ff, #e9d5ff);
+      border-radius: 50%;
+      border: 3px solid #9333ea;
+      box-shadow: 0 4px 15px rgba(147, 51, 234, 0.25);
+    }
+
+    /* Ears (spiky Labubu style) */
+    .ear {
+      position: absolute;
+      top: 10px;
+      width: 28px;
+      height: 50px;
+      background: linear-gradient(160deg, #e9d5ff, #c084fc);
+      border: 3px solid #9333ea;
+      border-radius: 50% 50% 30% 30%;
+    }
+    .ear-left  { left: -4px;  transform: rotate(-20deg); }
+    .ear-right { right: -4px; transform: rotate(20deg); }
+
+    /* Eye whites */
+    .eye {
+      position: absolute;
+      top: 30px;
+      width: 26px;
+      height: 28px;
+      background: white;
+      border-radius: 50%;
+      border: 2.5px solid #7c3aed;
+    }
+    .eye-left  { left: 16px; }
+    .eye-right { right: 16px; }
+
+    /* Pupils */
+    .pupil {
+      position: absolute;
+      top: 6px;
+      left: 5px;
+      width: 14px;
+      height: 14px;
+      background: #1e1b4b;
+      border-radius: 50%;
+      animation: blink 4s ease-in-out infinite;
+    }
+
+    /* Shine in eyes */
+    .shine {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 5px;
+      height: 5px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95%            { transform: scaleY(0.1); }
+    }
+
+    /* Nose */
+    .nose {
+      position: absolute;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 7px;
+      background: #9333ea;
+      border-radius: 50%;
+    }
+
+    /* Smile */
+    .mouth {
+      position: absolute;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 14px;
+      border-bottom: 3px solid #7c3aed;
+      border-radius: 0 0 50% 50%;
+    }
+
+    /* Cheeks */
+    .cheek {
+      position: absolute;
+      top: 55px;
+      width: 16px;
+      height: 10px;
+      background: rgba(244, 114, 182, 0.45);
+      border-radius: 50%;
+    }
+    .cheek-left  { left: 8px; }
+    .cheek-right { right: 8px; }
+
+    /* Arms */
+    .arm {
+      position: absolute;
+      bottom: 55px;
+      width: 30px;
+      height: 65px;
+      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
+      border: 3px solid #9333ea;
+      border-radius: 40px;
+      transform-origin: top center;
+    }
+    .arm-left {
+      left: -18px;
+      transform: rotate(-30deg);
+      animation: waveLeft 1s ease-in-out infinite alternate;
+    }
+    .arm-right {
+      right: -18px;
+      transform: rotate(30deg);
+      animation: waveRight 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes waveLeft {
+      from { transform: rotate(-30deg); }
+      to   { transform: rotate(-65deg); }
+    }
+    @keyframes waveRight {
+      from { transform: rotate(30deg); }
+      to   { transform: rotate(65deg); }
+    }
+
+    /* Legs */
+    .leg {
+      position: absolute;
+      bottom: -28px;
+      width: 30px;
+      height: 40px;
+      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
+      border: 3px solid #9333ea;
+      border-radius: 0 0 20px 20px;
+    }
+    .leg-left  { left: 20px; }
+    .leg-right { right: 20px; }
+
+    /* Feet */
+    .foot {
+      position: absolute;
+      bottom: -10px;
+      width: 38px;
+      height: 16px;
+      background: linear-gradient(160deg, #e9d5ff, #c084fc);
+      border: 3px solid #9333ea;
+      border-radius: 50%;
+    }
+    .foot-left  { left: -4px; }
+    .foot-right { right: -4px; }
+
+    /* Tail */
+    .tail {
+      position: absolute;
+      bottom: 20px;
+      right: -22px;
+      width: 20px;
+      height: 30px;
+      background: linear-gradient(160deg, #e9d5ff, #c084fc);
+      border: 2.5px solid #9333ea;
+      border-radius: 50% 80% 80% 50%;
+      transform: rotate(20deg);
+    }
+
+    /* Greeting button */
+    .greet-btn {
+      position: relative;
+      z-index: 2;
+      margin-top: 2.5rem;
+      padding: 12px 36px;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5, #2563eb);
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.6), 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .greet-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 0 35px rgba(124, 58, 237, 0.8), 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .greet-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* API response message */
+    .api-msg {
+      position: relative;
+      z-index: 2;
+      margin-top: 1rem;
+      min-height: 1.6rem;
+      font-size: 1rem;
+      color: #e9d5ff;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .api-msg.visible {
+      opacity: 1;
+    }
+
+    /* Stars */
+    .star {
+      position: fixed;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0%   { opacity: 0.1; transform: scale(0.8); }
+      100% { opacity: 0.8; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield -->
+  <div id="stars"></div>
+
+  <!-- Bubbles -->
+  <div class="bubbles" id="bubbles"></div>
+
+  <!-- Welcome text -->
+  <div class="welcome-text">✨ Welcome ✨</div>
+
+  <!-- Labubu scene -->
+  <div class="scene">
+    <div class="speech-bubble">Hi! 👋</div>
+
+    <div class="labubu">
+      <!-- Head -->
+      <div class="head">
+        <div class="ear ear-left"></div>
+        <div class="ear ear-right"></div>
+        <div class="eye eye-left">
+          <div class="pupil"><div class="shine"></div></div>
+        </div>
+        <div class="eye eye-right">
+          <div class="pupil"><div class="shine"></div></div>
+        </div>
+        <div class="cheek cheek-left"></div>
+        <div class="cheek cheek-right"></div>
+        <div class="nose"></div>
+        <div class="mouth"></div>
+      </div>
+
+      <!-- Body -->
+      <div class="body">
+        <div class="tummy"></div>
+        <div class="arm arm-left"></div>
+        <div class="arm arm-right"></div>
+        <div class="tail"></div>
+        <div class="leg leg-left">
+          <div class="foot foot-left"></div>
+        </div>
+        <div class="leg leg-right">
+          <div class="foot foot-right"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Greet button -->
+  <button class="greet-btn" onclick="fetchGreet()">Say Hi to Labubu!</button>
+  <div class="api-msg" id="apiMsg"></div>
+
+  <script>
+    // Generate stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 3 + 1;
+      star.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        top: ${Math.random() * 100}vh;
+        left: ${Math.random() * 100}vw;
+        animation-duration: ${Math.random() * 3 + 1.5}s;
+        animation-delay: ${Math.random() * 3}s;
+      `;
+      starsContainer.appendChild(star);
+    }
+
+    // Generate bubbles
+    const bubblesContainer = document.getElementById('bubbles');
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = Math.random() * 60 + 20;
+      b.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        left: ${Math.random() * 100}%;
+        animation-duration: ${Math.random() * 12 + 8}s;
+        animation-delay: ${Math.random() * 10}s;
+      `;
+      bubblesContainer.appendChild(b);
+    }
+
+    // Fetch greeting from FastAPI
+    async function fetchGreet() {
+      const el = document.getElementById('apiMsg');
+      el.classList.remove('visible');
+      try {
+        const res = await fetch('/api/greet');
+        const data = await res.json();
+        el.textContent = data.message;
+      } catch {
+        el.textContent = "Labubu is waving at you! 🐾";
+      }
+      el.classList.add('visible');
+    }
+  </script>
+</body>
+</html>
