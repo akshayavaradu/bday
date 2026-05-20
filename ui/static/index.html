@@ -448,6 +448,115 @@
       box-shadow: 0 0 32px rgba(255,215,0,0.5), 3px 3px 0 rgba(255,215,0,0.4);
     }
     .poster-btn:active { transform: scale(0.97); }
+
+    /* Birthday popup */
+    .bday-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInOverlay 0.35s ease both;
+    }
+    .bday-overlay.hidden {
+      animation: fadeOutOverlay 0.35s ease both;
+      pointer-events: none;
+    }
+
+    .bday-box {
+      background: linear-gradient(145deg, #0d0520, #1a0a38);
+      border: 3px solid #ffd700;
+      border-radius: 28px;
+      padding: 3rem 3.2rem 2.4rem;
+      max-width: 420px;
+      width: 92%;
+      text-align: center;
+      box-shadow: 0 0 70px rgba(255, 215, 0, 0.25), 0 0 140px rgba(130, 0, 255, 0.15), 0 20px 60px rgba(0,0,0,0.8);
+      animation: popInBox 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: 0.05s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bday-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .bday-bat {
+      font-size: 3.5rem;
+      margin-bottom: 0.4rem;
+      animation: batFloat 2s ease-in-out infinite;
+      display: block;
+    }
+
+    .bday-title {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffd700, #ffe97a, #f5c518, #ffd700);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 2.5s linear infinite;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 12px rgba(255,215,0,0.5));
+    }
+
+    .bday-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      color: #d4b8f0;
+      line-height: 1.6;
+      margin-bottom: 0.6rem;
+    }
+
+    .bday-quote {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: rgba(255,215,0,0.7);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .bday-close {
+      padding: 11px 36px;
+      background: linear-gradient(135deg, #0d1b2a, #111827);
+      color: #ffd700;
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: 2px solid #ffd700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(255,215,0,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .bday-close:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 36px rgba(255,215,0,0.55);
+    }
+    .bday-close:active { transform: scale(0.97); }
+
+    .bday-confetti {
+      position: absolute;
+      font-size: 1.4rem;
+      animation: confettiFall linear infinite;
+      pointer-events: none;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+      100% { transform: translateY(420px) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -492,8 +601,19 @@
         how magical they truly are.<br>
         Consider this your reminder&nbsp;🌟
       </div>
-      <div class="poster-sub">— Now explore Gotham 🌃 —</div>
+      <div class="poster-sub">— Go and save the world! 🌃 —</div>
       <button class="poster-btn" onclick="dismissPoster()">To Gotham! 🦇</button>
+    </div>
+  </div>
+
+  <!-- Birthday popup -->
+  <div class="bday-overlay hidden" id="bdayOverlay">
+    <div class="bday-box" id="bdayBox">
+      <span class="bday-bat">🦇</span>
+      <div class="bday-title">Happy Birthday! 🎂</div>
+      <div class="bday-sub">Gotham lights up for you today.<br>You are one of a kind! 🌟</div>
+      <div class="bday-quote">— The Dark Knight sends his wishes —</div>
+      <button class="bday-close" onclick="closeBdayPopup()">Thank you, Batman! 🦇</button>
     </div>
   </div>
 
@@ -508,7 +628,7 @@
 
   <!-- Batman scene -->
   <div class="scene">
-    <div class="speech-bubble">I am Batman! 🦇</div>
+    <div class="speech-bubble">Batman's Birthdayyy! 🦇</div>
 
     <div class="batman">
       <div class="bat-ring"></div>
@@ -518,7 +638,7 @@
   </div>
 
   <!-- Signal button -->
-  <button class="greet-btn" onclick="fetchGreet()">Signal the Bat! 🦇</button>
+  <button class="greet-btn" onclick="showBdayPopup()">Signal the Bat! 🦇</button>
   <div class="api-msg" id="apiMsg"></div>
 
   <script>
@@ -566,6 +686,38 @@
         font-size: ${Math.random() * 1.4 + 0.7}rem;
       `;
       bubblesContainer.appendChild(b);
+    }
+
+    const confettiEmojis = ['🦇','⭐','✨','🌟','🎂','🎉','🎊','💛','🌙'];
+
+    function showBdayPopup() {
+      const overlay = document.getElementById('bdayOverlay');
+      const box     = document.getElementById('bdayBox');
+      overlay.classList.remove('hidden');
+
+      // spawn falling confetti inside the box
+      box.querySelectorAll('.bday-confetti').forEach(e => e.remove());
+      for (let i = 0; i < 14; i++) {
+        const el = document.createElement('span');
+        el.className = 'bday-confetti';
+        el.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+        el.style.cssText = `
+          left: ${Math.random() * 90}%;
+          top: ${Math.random() * -10}px;
+          animation-duration: ${Math.random() * 2 + 2}s;
+          animation-delay: ${Math.random() * 1.5}s;
+          font-size: ${Math.random() * 0.8 + 0.9}rem;
+        `;
+        box.appendChild(el);
+      }
+    }
+
+    function closeBdayPopup() {
+      const overlay = document.getElementById('bdayOverlay');
+      overlay.classList.add('hidden');
+      overlay.addEventListener('animationend', () => {
+        overlay.classList.add('hidden');
+      }, { once: true });
     }
 
     async function fetchGreet() {
