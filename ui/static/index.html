@@ -356,22 +356,34 @@
     /* Doodles */
     .doodle {
       position: absolute;
-      font-size: 2.4rem;
       user-select: none;
-      line-height: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
     }
-    .d1  { top: -18px;   left: 18px;  transform: rotate(-15deg); }
-    .d2  { top: -20px;   left: 50%;   transform: translateX(-50%) rotate(5deg); }
-    .d3  { top: -16px;   right: 24px; transform: rotate(20deg); }
-    .d4  { top: 28px;    left: -22px; transform: rotate(-30deg); }
-    .d5  { top: 50%;     left: -24px; transform: translateY(-50%) rotate(10deg); }
-    .d6  { bottom: 40px; left: -22px; transform: rotate(25deg); }
-    .d7  { top: 28px;    right: -22px; transform: rotate(20deg); }
-    .d8  { top: 50%;     right: -24px; transform: translateY(-50%) rotate(-10deg); }
-    .d9  { bottom: 40px; right: -22px; transform: rotate(-25deg); }
-    .d10 { bottom: -18px; left: 24px;  transform: rotate(15deg); }
-    .d11 { bottom: -20px; left: 50%;   transform: translateX(-50%) rotate(-8deg); }
-    .d12 { bottom: -18px; right: 24px; transform: rotate(-20deg); }
+    .doodle-icon  { font-size: 2.4rem; line-height: 1; }
+    .doodle-label {
+      font-family: 'Caveat', cursive;
+      font-size: 0.62rem;
+      color: #ffd700;
+      white-space: nowrap;
+      font-weight: 700;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.95);
+    }
+    .d1  { top: -22px;   left: 18px;   transform: rotate(-15deg); }
+    .d2  { top: -24px;   left: 50%;    transform: translateX(-50%) rotate(5deg); }
+    .d3  { top: -22px;   right: 24px;  transform: rotate(20deg); }
+    .d4  { top: 28px;    left: -32px;  transform: rotate(-30deg); }
+    .d5  { top: 50%;     left: -34px;  transform: translateY(-50%) rotate(10deg); }
+    .d6  { bottom: 40px; left: -32px;  transform: rotate(25deg); }
+    .d7  { top: 28px;    right: -32px; transform: rotate(20deg); }
+    .d8  { top: 50%;     right: -34px; transform: translateY(-50%) rotate(-10deg); }
+    .d9  { bottom: 40px; right: -32px; transform: rotate(-25deg); }
+    .d10 { bottom: -28px; left: 10px;  transform: rotate(15deg); }
+    .d11 { bottom: -30px; left: 30%;   transform: rotate(-8deg); }
+    .d12 { bottom: -30px; right: 30%;  transform: rotate(8deg); }
+    .d13 { bottom: -28px; right: 10px; transform: rotate(-15deg); }
 
     .poster-tagline {
       font-family: 'Caveat', cursive;
@@ -458,18 +470,19 @@
   <div class="poster-overlay hidden" id="posterOverlay">
     <div class="poster-card">
       <!-- Corner & edge doodles -->
-      <span class="doodle d1">▶️</span>
-      <span class="doodle d2">🏸</span>
-      <span class="doodle d3">🏊‍♂️</span>
-      <span class="doodle d4">🍚</span>
-      <span class="doodle d5">💰</span>
-      <span class="doodle d6">🕺</span>
-      <span class="doodle d7">🏋️‍♂️</span>
-      <span class="doodle d8">👬</span>
-      <span class="doodle d9">🤳</span>
-      <span class="doodle d10">👨‍💻</span>
-      <span class="doodle d11">🍚</span>
-      <span class="doodle d12">🏊‍♂️</span>
+      <span class="doodle d1"><span class="doodle-icon">▶️</span><span class="doodle-label">YouTube</span></span>
+      <span class="doodle d2"><span class="doodle-icon">🏸</span><span class="doodle-label">Badminton</span></span>
+      <span class="doodle d3"><span class="doodle-icon">🏊‍♂️</span><span class="doodle-label">Swimming</span></span>
+      <span class="doodle d4"><span class="doodle-icon">💰</span><span class="doodle-label">Money</span></span>
+      <span class="doodle d5"><span class="doodle-icon">🕺</span><span class="doodle-label">Dance</span></span>
+      <span class="doodle d6"><span class="doodle-icon">🏋️‍♂️</span><span class="doodle-label">Gym</span></span>
+      <span class="doodle d7"><span class="doodle-icon">👬</span><span class="doodle-label">Friends</span></span>
+      <span class="doodle d8"><span class="doodle-icon">🤳</span><span class="doodle-label">Selfie</span></span>
+      <span class="doodle d9"><span class="doodle-icon">👨‍💻</span><span class="doodle-label">Coder</span></span>
+      <span class="doodle d10"><span class="doodle-icon">🍮</span><span class="doodle-label">Kunafa</span></span>
+      <span class="doodle d11"><span class="doodle-icon">📱</span><span class="doodle-label">iPhone</span></span>
+      <span class="doodle d12"><span class="doodle-icon">🥋</span><span class="doodle-label">Jackie Chan</span></span>
+      <span class="doodle d13"><span class="doodle-icon">🦇</span><span class="doodle-label">Batman</span></span>
 
       <div class="poster-tagline">🦇 A message from the Dark Knight 🦇</div>
       <div class="poster-title">Rise from the Dark</div>
