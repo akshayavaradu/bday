@@ -22,4 +22,4 @@ def root():
 
 @app.get("/api/greet")
 def greet():
-    return {"message": "Hi! I'm Labubu! Welcome to my world! 🐾"}
+    return {"message": "Gotham is watching. Stay strong, Dark Knight! 🦇"}
