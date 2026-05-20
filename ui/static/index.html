@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Labubu's World</title>
+  <title>Gotham City</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -18,13 +18,27 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #0d0221 0%, #1a0545 25%, #2d1b69 50%, #4a2080 75%, #6a3de8 100%);
+      background: linear-gradient(160deg, #000000 0%, #03070f 20%, #050d1c 45%, #071428 70%, #030810 100%);
       font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
       position: relative;
     }
 
-    /* Floating bubbles */
+    /* Stars */
+    .star {
+      position: fixed;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0%   { opacity: 0.08; transform: scale(0.8); }
+      100% { opacity: 0.95; transform: scale(1.4); }
+    }
+
+    /* Floating bats */
     .bubbles {
       position: fixed;
       top: 0; left: 0;
@@ -35,36 +49,33 @@
 
     .bubble {
       position: absolute;
-      bottom: -100px;
-      border-radius: 50%;
-      opacity: 0.15;
+      bottom: -80px;
+      opacity: 0.12;
       animation: rise linear infinite;
-      background: radial-gradient(circle at 30% 30%, #c084fc, #7c3aed);
     }
 
     @keyframes rise {
-      0%   { transform: translateY(0) scale(1);   opacity: 0.15; }
-      80%  { opacity: 0.1; }
-      100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+      0%   { transform: translateY(0) rotate(0deg);      opacity: 0.12; }
+      50%  { transform: translateY(-55vh) rotate(15deg); opacity: 0.08; }
+      100% { transform: translateY(-115vh) rotate(-10deg); opacity: 0; }
     }
 
     /* Welcome text */
     .welcome-text {
       position: relative;
       z-index: 2;
-      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-size: clamp(2.2rem, 6.5vw, 4.5rem);
       font-weight: 900;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      background: linear-gradient(90deg, #c084fc, #818cf8, #60a5fa, #c084fc);
+      background: linear-gradient(90deg, #ffd700, #ffe566, #f5c518, #ffd700);
       background-size: 300% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: shimmer 3s linear infinite;
       margin-bottom: 1.5rem;
-      text-shadow: none;
-      filter: drop-shadow(0 0 18px rgba(192, 132, 252, 0.6));
+      filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.55));
     }
 
     @keyframes shimmer {
@@ -72,7 +83,7 @@
       100% { background-position: 300% center; }
     }
 
-    /* Labubu scene */
+    /* Scene */
     .scene {
       position: relative;
       z-index: 2;
@@ -84,15 +95,15 @@
     /* Speech bubble */
     .speech-bubble {
       position: relative;
-      background: rgba(255, 255, 255, 0.95);
-      border: 3px solid #c084fc;
+      background: rgba(5, 12, 25, 0.96);
+      border: 3px solid #ffd700;
       border-radius: 20px;
       padding: 10px 22px;
       font-size: 1.5rem;
       font-weight: 800;
-      color: #5b21b6;
+      color: #ffd700;
       margin-bottom: 10px;
-      box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+      box-shadow: 0 0 22px rgba(255, 215, 0, 0.35);
       animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
       animation-delay: 0.4s;
     }
@@ -104,7 +115,7 @@
       left: 50%;
       transform: translateX(-50%);
       border: 7px solid transparent;
-      border-top-color: #c084fc;
+      border-top-color: #ffd700;
     }
 
     .speech-bubble::before {
@@ -114,7 +125,7 @@
       left: 50%;
       transform: translateX(-50%);
       border: 7px solid transparent;
-      border-top-color: rgba(255,255,255,0.95);
+      border-top-color: rgba(5, 12, 25, 0.96);
       z-index: 1;
     }
 
@@ -123,217 +134,57 @@
       100% { transform: scale(1) rotate(0deg);  opacity: 1; }
     }
 
-    /* Labubu body */
-    .labubu {
-      width: 180px;
-      height: 240px;
+    /* Batman figure */
+    .batman {
+      width: 200px;
+      height: 220px;
       position: relative;
-      animation: float 3s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-14px); }
-    }
-
-    /* Body */
-    .body {
+    .bat-glow {
       position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 130px;
-      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
-      border-radius: 50px 50px 40px 40px;
-      border: 3px solid #9333ea;
-      box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
-    }
-
-    /* Tummy dot */
-    .tummy {
-      position: absolute;
-      bottom: 35px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 38px;
-      height: 48px;
-      background: rgba(255,255,255,0.55);
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+      animation: glowPulse 3s ease-in-out infinite;
     }
 
-    /* Head */
-    .head {
+    @keyframes glowPulse {
+      0%, 100% { transform: scale(1);   opacity: 0.5; }
+      50%       { transform: scale(1.4); opacity: 1;   }
+    }
+
+    .bat-emoji {
+      font-size: 9rem;
+      filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.65));
+      animation: batFloat 3s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes batFloat {
+      0%, 100% { transform: translateY(0px)   rotate(-4deg); }
+      50%       { transform: translateY(-16px) rotate(4deg);  }
+    }
+
+    /* Bat signal ring */
+    .bat-ring {
       position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 95px;
-      background: linear-gradient(160deg, #f5e6ff, #e9d5ff);
+      width: 210px;
+      height: 210px;
       border-radius: 50%;
-      border: 3px solid #9333ea;
-      box-shadow: 0 4px 15px rgba(147, 51, 234, 0.25);
+      border: 1.5px solid rgba(255, 215, 0, 0.18);
+      animation: ringExpand 3s ease-in-out infinite;
     }
 
-    /* Ears (spiky Labubu style) */
-    .ear {
-      position: absolute;
-      top: 10px;
-      width: 28px;
-      height: 50px;
-      background: linear-gradient(160deg, #e9d5ff, #c084fc);
-      border: 3px solid #9333ea;
-      border-radius: 50% 50% 30% 30%;
-    }
-    .ear-left  { left: -4px;  transform: rotate(-20deg); }
-    .ear-right { right: -4px; transform: rotate(20deg); }
-
-    /* Eye whites */
-    .eye {
-      position: absolute;
-      top: 30px;
-      width: 26px;
-      height: 28px;
-      background: white;
-      border-radius: 50%;
-      border: 2.5px solid #7c3aed;
-    }
-    .eye-left  { left: 16px; }
-    .eye-right { right: 16px; }
-
-    /* Pupils */
-    .pupil {
-      position: absolute;
-      top: 6px;
-      left: 5px;
-      width: 14px;
-      height: 14px;
-      background: #1e1b4b;
-      border-radius: 50%;
-      animation: blink 4s ease-in-out infinite;
-    }
-
-    /* Shine in eyes */
-    .shine {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 5px;
-      height: 5px;
-      background: white;
-      border-radius: 50%;
-    }
-
-    @keyframes blink {
-      0%, 90%, 100% { transform: scaleY(1); }
-      95%            { transform: scaleY(0.1); }
-    }
-
-    /* Nose */
-    .nose {
-      position: absolute;
-      top: 56px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 10px;
-      height: 7px;
-      background: #9333ea;
-      border-radius: 50%;
-    }
-
-    /* Smile */
-    .mouth {
-      position: absolute;
-      top: 66px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 28px;
-      height: 14px;
-      border-bottom: 3px solid #7c3aed;
-      border-radius: 0 0 50% 50%;
-    }
-
-    /* Cheeks */
-    .cheek {
-      position: absolute;
-      top: 55px;
-      width: 16px;
-      height: 10px;
-      background: rgba(244, 114, 182, 0.45);
-      border-radius: 50%;
-    }
-    .cheek-left  { left: 8px; }
-    .cheek-right { right: 8px; }
-
-    /* Arms */
-    .arm {
-      position: absolute;
-      bottom: 55px;
-      width: 30px;
-      height: 65px;
-      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
-      border: 3px solid #9333ea;
-      border-radius: 40px;
-      transform-origin: top center;
-    }
-    .arm-left {
-      left: -18px;
-      transform: rotate(-30deg);
-      animation: waveLeft 1s ease-in-out infinite alternate;
-    }
-    .arm-right {
-      right: -18px;
-      transform: rotate(30deg);
-      animation: waveRight 1s ease-in-out infinite alternate;
-    }
-
-    @keyframes waveLeft {
-      from { transform: rotate(-30deg); }
-      to   { transform: rotate(-65deg); }
-    }
-    @keyframes waveRight {
-      from { transform: rotate(30deg); }
-      to   { transform: rotate(65deg); }
-    }
-
-    /* Legs */
-    .leg {
-      position: absolute;
-      bottom: -28px;
-      width: 30px;
-      height: 40px;
-      background: linear-gradient(160deg, #f0d9ff, #d8b4fe);
-      border: 3px solid #9333ea;
-      border-radius: 0 0 20px 20px;
-    }
-    .leg-left  { left: 20px; }
-    .leg-right { right: 20px; }
-
-    /* Feet */
-    .foot {
-      position: absolute;
-      bottom: -10px;
-      width: 38px;
-      height: 16px;
-      background: linear-gradient(160deg, #e9d5ff, #c084fc);
-      border: 3px solid #9333ea;
-      border-radius: 50%;
-    }
-    .foot-left  { left: -4px; }
-    .foot-right { right: -4px; }
-
-    /* Tail */
-    .tail {
-      position: absolute;
-      bottom: 20px;
-      right: -22px;
-      width: 20px;
-      height: 30px;
-      background: linear-gradient(160deg, #e9d5ff, #c084fc);
-      border: 2.5px solid #9333ea;
-      border-radius: 50% 80% 80% 50%;
-      transform: rotate(20deg);
+    @keyframes ringExpand {
+      0%   { transform: scale(0.8); opacity: 0.5; }
+      50%  { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(0.8); opacity: 0.5; }
     }
 
     /* Greeting button */
@@ -342,21 +193,21 @@
       z-index: 2;
       margin-top: 2.5rem;
       padding: 12px 36px;
-      background: linear-gradient(135deg, #7c3aed, #4f46e5, #2563eb);
-      color: white;
+      background: linear-gradient(135deg, #0d1b2a, #111827);
+      color: #ffd700;
       font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      border: none;
+      letter-spacing: 0.06em;
+      border: 2px solid #ffd700;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 0 25px rgba(124, 58, 237, 0.6), 0 4px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 0 22px rgba(255, 215, 0, 0.25), 0 4px 15px rgba(0,0,0,0.6);
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .greet-btn:hover {
       transform: translateY(-3px) scale(1.04);
-      box-shadow: 0 0 35px rgba(124, 58, 237, 0.8), 0 6px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 0 38px rgba(255, 215, 0, 0.55), 0 6px 20px rgba(0,0,0,0.6);
     }
 
     .greet-btn:active {
@@ -370,7 +221,7 @@
       margin-top: 1rem;
       min-height: 1.6rem;
       font-size: 1rem;
-      color: #e9d5ff;
+      color: #ffd700;
       font-weight: 600;
       letter-spacing: 0.03em;
       text-align: center;
@@ -382,25 +233,11 @@
       opacity: 1;
     }
 
-    /* Stars */
-    .star {
-      position: fixed;
-      border-radius: 50%;
-      background: white;
-      animation: twinkle ease-in-out infinite alternate;
-      z-index: 0;
-    }
-
-    @keyframes twinkle {
-      0%   { opacity: 0.1; transform: scale(0.8); }
-      100% { opacity: 0.8; transform: scale(1.2); }
-    }
-
     /* Disclaimer overlay */
     .disclaimer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(13, 2, 33, 0.92);
+      background: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(8px);
       z-index: 100;
       display: flex;
@@ -425,14 +262,14 @@
     }
 
     .disclaimer-box {
-      background: linear-gradient(145deg, #1a0545, #2d1b69);
-      border: 2px solid #c084fc;
+      background: linear-gradient(145deg, #030810, #071428);
+      border: 2px solid #ffd700;
       border-radius: 24px;
       padding: 2.5rem 3rem;
       max-width: 440px;
       width: 90%;
       text-align: center;
-      box-shadow: 0 0 60px rgba(192, 132, 252, 0.35), 0 20px 50px rgba(0,0,0,0.5);
+      box-shadow: 0 0 60px rgba(255, 215, 0, 0.18), 0 20px 50px rgba(0,0,0,0.8);
       animation: popInBox 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
       animation-delay: 0.1s;
     }
@@ -450,7 +287,7 @@
     .disclaimer-title {
       font-size: 2.2rem;
       font-weight: 900;
-      background: linear-gradient(90deg, #c084fc, #818cf8, #60a5fa);
+      background: linear-gradient(90deg, #ffd700, #ffe566, #f5c518);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -459,7 +296,7 @@
     }
 
     .disclaimer-text {
-      color: #d8b4fe;
+      color: #8eacc4;
       font-size: 1rem;
       line-height: 1.6;
       margin-bottom: 1.8rem;
@@ -467,32 +304,32 @@
 
     .disclaimer-btn {
       padding: 11px 34px;
-      background: linear-gradient(135deg, #7c3aed, #4f46e5);
-      color: white;
+      background: linear-gradient(135deg, #0d1b2a, #111827);
+      color: #ffd700;
       font-size: 1rem;
       font-weight: 700;
-      border: none;
+      border: 2px solid #ffd700;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.22);
       transition: transform 0.2s, box-shadow 0.2s;
       letter-spacing: 0.04em;
     }
 
     .disclaimer-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 0 30px rgba(124, 58, 237, 0.8);
+      box-shadow: 0 0 32px rgba(255, 215, 0, 0.5);
     }
 
     .disclaimer-btn:active {
       transform: scale(0.97);
     }
 
-    /* ── Poster overlay ── */
+    /* Poster overlay */
     .poster-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(13, 2, 33, 0.88);
+      background: rgba(0, 0, 0, 0.92);
       backdrop-filter: blur(6px);
       z-index: 99;
       display: flex;
@@ -504,33 +341,33 @@
 
     .poster-card {
       position: relative;
-      background: #fdf6ff;
-      border: 3px solid #9333ea;
+      background: linear-gradient(145deg, #030810, #071428);
+      border: 3px solid #ffd700;
       border-radius: 2% 4% 2% 4% / 4% 2% 4% 2%;
       padding: 2.8rem 2.5rem 2rem;
       max-width: 500px;
       width: 92%;
       text-align: center;
-      box-shadow: 4px 4px 0 #c084fc, 8px 8px 0 rgba(147,51,234,0.25);
+      box-shadow: 4px 4px 0 rgba(255,215,0,0.35), 8px 8px 0 rgba(255,215,0,0.12), 0 0 50px rgba(255,215,0,0.12);
       animation: popInBox 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
       animation-delay: 0.15s;
     }
 
-    /* doodles scattered around */
+    /* Doodles */
     .doodle {
       position: absolute;
       font-size: 2.4rem;
       user-select: none;
       line-height: 1;
     }
-    .d1  { top: -18px;  left: 18px;  transform: rotate(-15deg); }
-    .d2  { top: -20px;  left: 50%;   transform: translateX(-50%) rotate(5deg); }
-    .d3  { top: -16px;  right: 24px; transform: rotate(20deg); }
-    .d4  { top: 28px;   left: -22px; transform: rotate(-30deg); }
-    .d5  { top: 50%;    left: -24px; transform: translateY(-50%) rotate(10deg); }
+    .d1  { top: -18px;   left: 18px;  transform: rotate(-15deg); }
+    .d2  { top: -20px;   left: 50%;   transform: translateX(-50%) rotate(5deg); }
+    .d3  { top: -16px;   right: 24px; transform: rotate(20deg); }
+    .d4  { top: 28px;    left: -22px; transform: rotate(-30deg); }
+    .d5  { top: 50%;     left: -24px; transform: translateY(-50%) rotate(10deg); }
     .d6  { bottom: 40px; left: -22px; transform: rotate(25deg); }
-    .d7  { top: 28px;   right: -22px; transform: rotate(20deg); }
-    .d8  { top: 50%;    right: -24px; transform: translateY(-50%) rotate(-10deg); }
+    .d7  { top: 28px;    right: -22px; transform: rotate(20deg); }
+    .d8  { top: 50%;     right: -24px; transform: translateY(-50%) rotate(-10deg); }
     .d9  { bottom: 40px; right: -22px; transform: rotate(-25deg); }
     .d10 { bottom: -18px; left: 24px;  transform: rotate(15deg); }
     .d11 { bottom: -20px; left: 50%;   transform: translateX(-50%) rotate(-8deg); }
@@ -541,7 +378,7 @@
       font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 0.2em;
-      color: #9333ea;
+      color: #ffd700;
       text-transform: uppercase;
       margin-bottom: 0.6rem;
     }
@@ -550,24 +387,25 @@
       font-family: 'Caveat', cursive;
       font-size: 2.2rem;
       font-weight: 700;
-      color: #5b21b6;
+      color: #ffd700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 1rem;
       line-height: 1.2;
+      filter: drop-shadow(0 0 10px rgba(255,215,0,0.45));
     }
 
     .poster-divider {
       width: 70%;
       margin: 0 auto 1rem;
       border: none;
-      border-top: 2px dashed #c084fc;
+      border-top: 2px dashed rgba(255,215,0,0.45);
     }
 
     .poster-message {
       font-family: 'Caveat', cursive;
       font-size: 1.55rem;
-      color: #3b0764;
+      color: #c8d8e8;
       line-height: 1.55;
       margin-bottom: 1.6rem;
     }
@@ -575,27 +413,27 @@
     .poster-sub {
       font-family: 'Caveat', cursive;
       font-size: 1.1rem;
-      color: #7c3aed;
+      color: #ffd700;
       margin-bottom: 1.8rem;
     }
 
     .poster-btn {
       font-family: 'Caveat', cursive;
       padding: 10px 32px;
-      background: linear-gradient(135deg, #7c3aed, #4f46e5);
-      color: white;
+      background: linear-gradient(135deg, #0d1b2a, #111827);
+      color: #ffd700;
       font-size: 1.1rem;
       font-weight: 700;
-      border: none;
+      border: 2px solid #ffd700;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(124,58,237,0.45), 3px 3px 0 #9333ea;
+      box-shadow: 0 0 18px rgba(255,215,0,0.22), 3px 3px 0 rgba(255,215,0,0.28);
       transition: transform 0.2s, box-shadow 0.2s;
       letter-spacing: 0.05em;
     }
     .poster-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 0 30px rgba(124,58,237,0.75), 3px 3px 0 #9333ea;
+      box-shadow: 0 0 32px rgba(255,215,0,0.5), 3px 3px 0 rgba(255,215,0,0.4);
     }
     .poster-btn:active { transform: scale(0.97); }
   </style>
@@ -605,14 +443,14 @@
   <!-- Disclaimer overlay -->
   <div class="disclaimer-overlay" id="disclaimerOverlay">
     <div class="disclaimer-box">
-      <div class="disclaimer-emoji">🌟</div>
+      <div class="disclaimer-emoji">🦇</div>
       <div class="disclaimer-title">Disclaimer!</div>
       <p class="disclaimer-text">
         I'm a data scientist and I just learned this for you.<br>
-        The backend is done using fastapi and frontend using html , css, javascript. <br>
-        So, no more technical questions and just enjoy the rest 🌟
+        The backend is done using FastAPI and frontend using HTML, CSS, JavaScript.<br>
+        So, no more technical questions — just enjoy the rest 🦇
       </p>
-      <button class="disclaimer-btn" onclick="dismissDisclaimer()">Got it, let's go!</button>
+      <button class="disclaimer-btn" onclick="dismissDisclaimer()">Into the Batcave!</button>
     </div>
   </div>
 
@@ -633,71 +471,44 @@
       <span class="doodle d11">🍚</span>
       <span class="doodle d12">🏊‍♂️</span>
 
-      <div class="poster-tagline">✦ A note from Labubu ✦</div>
-      <div class="poster-title">Shine Bright Always</div>
+      <div class="poster-tagline">🦇 A message from the Dark Knight 🦇</div>
+      <div class="poster-title">Rise from the Dark</div>
       <hr class="poster-divider">
       <div class="poster-message">
-        Sometimes amazing people forget<br>
-        how magical they truly are.<br>
-        Consider this your reminder&nbsp;🌟
+        Even Gotham's darkest night<br>
+        gives way to a new dawn.<br>
+        You are stronger than you know&nbsp;🦇
       </div>
-      <div class="poster-sub">— Now go explore Labubu's world 🐾 —</div>
-      <button class="poster-btn" onclick="dismissPoster()">Let's Go! ✨</button>
+      <div class="poster-sub">— Now explore Gotham 🌃 —</div>
+      <button class="poster-btn" onclick="dismissPoster()">To Gotham! 🦇</button>
     </div>
   </div>
 
   <!-- Starfield -->
   <div id="stars"></div>
 
-  <!-- Bubbles -->
+  <!-- Floating bats -->
   <div class="bubbles" id="bubbles"></div>
 
   <!-- Welcome text -->
-  <div class="welcome-text">✨ Welcome ✨</div>
+  <div class="welcome-text">🦇 Gotham City 🦇</div>
 
-  <!-- Labubu scene -->
+  <!-- Batman scene -->
   <div class="scene">
-    <div class="speech-bubble">Hi! 👋</div>
+    <div class="speech-bubble">I am Batman! 🦇</div>
 
-    <div class="labubu">
-      <!-- Head -->
-      <div class="head">
-        <div class="ear ear-left"></div>
-        <div class="ear ear-right"></div>
-        <div class="eye eye-left">
-          <div class="pupil"><div class="shine"></div></div>
-        </div>
-        <div class="eye eye-right">
-          <div class="pupil"><div class="shine"></div></div>
-        </div>
-        <div class="cheek cheek-left"></div>
-        <div class="cheek cheek-right"></div>
-        <div class="nose"></div>
-        <div class="mouth"></div>
-      </div>
-
-      <!-- Body -->
-      <div class="body">
-        <div class="tummy"></div>
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="tail"></div>
-        <div class="leg leg-left">
-          <div class="foot foot-left"></div>
-        </div>
-        <div class="leg leg-right">
-          <div class="foot foot-right"></div>
-        </div>
-      </div>
+    <div class="batman">
+      <div class="bat-ring"></div>
+      <div class="bat-glow"></div>
+      <span class="bat-emoji">🦇</span>
     </div>
   </div>
 
-  <!-- Greet button -->
-  <button class="greet-btn" onclick="fetchGreet()">Say Hi to Labubu!</button>
+  <!-- Signal button -->
+  <button class="greet-btn" onclick="fetchGreet()">Signal the Bat! 🦇</button>
   <div class="api-msg" id="apiMsg"></div>
 
   <script>
-    // Dismiss disclaimer → show poster
     function dismissDisclaimer() {
       const overlay = document.getElementById('disclaimerOverlay');
       overlay.classList.add('hidden');
@@ -707,45 +518,43 @@
       }, { once: true });
     }
 
-    // Dismiss poster → enter main page
     function dismissPoster() {
       const poster = document.getElementById('posterOverlay');
       poster.style.animation = 'fadeOutOverlay 0.4s ease both';
       poster.addEventListener('animationend', () => poster.remove(), { once: true });
     }
 
-    // Generate stars
+    // Generate stars — more of them for a night sky feel
     const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 160; i++) {
       const star = document.createElement('div');
       star.className = 'star';
-      const size = Math.random() * 3 + 1;
+      const size = Math.random() * 2.5 + 0.5;
       star.style.cssText = `
         width: ${size}px; height: ${size}px;
         top: ${Math.random() * 100}vh;
         left: ${Math.random() * 100}vw;
-        animation-duration: ${Math.random() * 3 + 1.5}s;
-        animation-delay: ${Math.random() * 3}s;
+        animation-duration: ${Math.random() * 4 + 1.5}s;
+        animation-delay: ${Math.random() * 4}s;
       `;
       starsContainer.appendChild(star);
     }
 
-    // Generate bubbles
+    // Floating bats in the background
     const bubblesContainer = document.getElementById('bubbles');
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 10; i++) {
       const b = document.createElement('div');
       b.className = 'bubble';
-      const size = Math.random() * 60 + 20;
+      b.textContent = '🦇';
       b.style.cssText = `
-        width: ${size}px; height: ${size}px;
         left: ${Math.random() * 100}%;
-        animation-duration: ${Math.random() * 12 + 8}s;
-        animation-delay: ${Math.random() * 10}s;
+        animation-duration: ${Math.random() * 14 + 12}s;
+        animation-delay: ${Math.random() * 14}s;
+        font-size: ${Math.random() * 1.4 + 0.7}rem;
       `;
       bubblesContainer.appendChild(b);
     }
 
-    // Fetch greeting from FastAPI
     async function fetchGreet() {
       const el = document.getElementById('apiMsg');
       el.classList.remove('visible');
@@ -754,7 +563,7 @@
         const data = await res.json();
         el.textContent = data.message;
       } catch {
-        el.textContent = "Labubu is waving at you! 🐾";
+        el.textContent = "Gotham needs you! 🦇";
       }
       el.classList.add('visible');
     }
